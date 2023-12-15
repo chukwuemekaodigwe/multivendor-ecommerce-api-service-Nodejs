@@ -12,6 +12,7 @@ Each here has an access token which you can use to autheticate the system else y
 1) POST /users/createAdmin  // for admin account
 
 2) POST /users   //for paid account
+````
 
 FREE USER
 
