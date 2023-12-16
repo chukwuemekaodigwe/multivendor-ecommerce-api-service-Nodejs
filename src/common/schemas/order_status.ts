@@ -4,7 +4,7 @@ const crypto = require('crypto')
 
 const statusSchema = new Schema({
     vendorId:  {type: Schema.Types.ObjectId, ref: 'User'},
-    orderStatus: String,
+    status: String,
     customerId:  {type: Schema.Types.ObjectId, ref: 'Customer'},
     orderId:  {type: Schema.Types.ObjectId, ref: 'Order'},
     location: String,

@@ -6,7 +6,7 @@ const OrderSchema = new Schema({
     vendorId: {type: Schema.Types.ObjectId, ref: 'User'},
     status: String,
     customerId: {type: Schema.Types.ObjectId, ref: "Customer"},
-    InvoiceId: String,
+    invoiceId: String,
     grossTotal: Schema.Types.Decimal128,
     trackingId: String,
     dateCreated: Date,
