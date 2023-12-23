@@ -10,10 +10,10 @@ const customerSchema = new Schema({
     address: String,
     city: String,
     country: String,
-    dateCreated: Date,
-    dateUpdated: Date,
+    
     vendorId:  {type: Schema.Types.ObjectId, ref: 'User'},
-})
+}, {timestamps: true})
+
 
 customerSchema.virtual('id').get(function () {
     return this._id.toHexString()

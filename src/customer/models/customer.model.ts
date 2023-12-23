@@ -35,10 +35,13 @@ const list = async (perPage, page) => {
 
 const getByVendor = async (perPage, page, vendorId) => {
     return new Promise((resolve, reject) => {
-        Customer.find({vendorId: vendorId})
-            .limit(perPage)
-            .skip(perPage * page)
-            .exec().then(function (customers) {
+       let query = Customer.find({vendorId: vendorId})
+            .limit(perPage);
+            if(page > 1){
+                query.skip(perPage * page)
+            }
+            
+            query.exec().then(function (customers) {
                 resolve(customers)
             })
             .catch(err => {

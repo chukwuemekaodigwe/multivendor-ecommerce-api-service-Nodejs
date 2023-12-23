@@ -13,7 +13,8 @@ const hasAuthValidFields = (req, res, next) => {
         }
 
         if (errors.length) {
-            return res.status(400).send({ errors: errors.join(',') });
+            return res.status(400)
+            .send({ errors: errors.join(',') });
         } else {
             return next();
         }
@@ -26,9 +27,9 @@ const hasAuthValidFields = (req, res, next) => {
 const isPasswordAndUserMatch = (req, res, next) => {
     UserModel.findByEmail(req.body.email)
         .then((user) => {
-           // console.log(user)
+         //   console.log(user)
             if (!user) {
-                res.status(404).send({});
+                res.status(404).send({error: 'User not found'});
             } else {
                 
                 let passwordFields = user.password.split('$');
@@ -49,7 +50,17 @@ const isPasswordAndUserMatch = (req, res, next) => {
                 }
             }
         });
+
+        
 };
+
+export const IsEmailUsed = async (req, res, next) => {
+
+    UserModel.findByEmail(req.body.email).then(user=>{
+        if(!user) return next()
+        else return res.status(405).send({error: "Email already in use"})
+    })
+}
 
 export default {
  hasAuthValidFields,

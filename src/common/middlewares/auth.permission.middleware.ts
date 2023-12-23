@@ -7,6 +7,7 @@ const ADMIN_PERMISSION = secret['permissionLevels']['ADMIN'];
 
 const minimumPermissionLevelRequired = (required_permission_level) => {
     return (req, res, next) => {
+        if(!req.jwt) return res.status(403).send({success: 'failed', 'message': 'You don\'t have the permission to perform this task'});
         let user_permission_level = parseInt(req.jwt.permissionLevel);
         let userId = req.jwt.userId;
         //console.log(user_permission_level & required_permission_level)

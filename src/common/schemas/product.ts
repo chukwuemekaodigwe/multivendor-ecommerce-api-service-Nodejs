@@ -11,10 +11,8 @@ const productSchema = new Schema({
     sellingprice: Schema.Types.Decimal128,
     measuring_unit:String,
     description: String,
-    dateCreated: Date,
-    dateUpdated: Date,
     dateDeleted: Date
-})
+}, {timestamps: true})
 
 productSchema.virtual('id').get(function () {
     return this._id.toHexString()

@@ -1,3 +1,4 @@
+import { resolve } from 'node:path';
 import User from '../../common/schemas/user'
 
 const findById = async (id) => {
@@ -18,12 +19,30 @@ const createUser = async (userData) => {
     return user.save()
 }
 
+const updateProfile = async (userData, userId) => {
+
+    return new Promise(async (resolve, reject) => {
+        // let u = User.findOne({_id: userId})
+        await User.findOneAndUpdate({ _id: userId }, userData, {returnDocument: 'after', runValidators: true})
+            .then((result) => {
+                if (result) resolve(result)
+                return reject(result)
+            })
+    })
+
+}
+
 const list = async (perPage, page) => {
     return new Promise((resolve, reject) => {
-        User.find()
+       const query = User.find()
             .limit(perPage)
-            .skip(perPage * page)
-            .exec().then(function (users) {
+            
+            if(page > 1){
+                query.skip(perPage * page)
+            }
+            
+            
+            query.exec().then(function (users) {
                 resolve(users)
             })
             .catch(err => {
@@ -35,6 +54,7 @@ const list = async (perPage, page) => {
 const findByEmail = async (email) => {
     return User.findOne({ email: email })
         .then(res => {
+           // console.log(res)
             if (res) {
                 res = res.toJSON()
                 delete res._id
@@ -54,7 +74,7 @@ const patchUser = (id, userData) => {
 
 const removeById = (userId) => {
     return new Promise((resolve, reject) => {
-        User.deleteMany({_id: userId}, (err) => {
+        User.deleteMany({ _id: userId }, (err) => {
             if (err) {
                 reject(err);
             } else {
@@ -64,11 +84,25 @@ const removeById = (userId) => {
     });
 };
 
+export const CheckVendorId = (vendorCode) => {
+    return new Promise(async(resolve, reject) => {
+      
+        User.findById(vendorCode)
+
+        .then(res =>{
+          //  console.log(res)
+            if(!res) return reject()
+            return resolve(res)
+        })
+    })
+}
+
 
 export default {
+    updateProfile,
     findById,
     createUser,
-    list,   
+    list, CheckVendorId,
     findByEmail,
-    patchUser, removeById
+    patchUser, removeById,
 }

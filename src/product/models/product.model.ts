@@ -15,16 +15,35 @@ const findById = async (id) => {
         })
 }
 
-const list = async (perPage, page, vendor) => {
+const paginate = async (perPage, page, vendor) => {
     return new Promise((resolve, reject) => {
         Product.find({ vendorId: vendor })
             .limit(perPage)
             .skip(perPage * page)
             .exec()
             .then((res) => {
+                
                 resolve(res)
             })
             .catch(err => {
+                reject(err)
+            })
+    })
+}
+
+
+const list = async (perPage, page, vendor) => {
+    return new Promise((resolve, reject) => {
+        Product.find({ vendorId: vendor })
+            //.limit(perPage)
+           // .skip(perPage * page)
+            .exec()
+            .then((res) => {
+                
+                resolve(res)
+            })
+            .catch(err => {
+                console.log(err)
                 reject(err)
             })
     })

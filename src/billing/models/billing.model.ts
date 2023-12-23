@@ -19,7 +19,7 @@ const billsByCustomer = async (customerId) => {
     return Billing.find({customerId: customerId})
     .then((res) => {
         if(!res) return
-        res = result.toJSON()
+        res = res.toJSON()
         delete res._id
         return res
     })

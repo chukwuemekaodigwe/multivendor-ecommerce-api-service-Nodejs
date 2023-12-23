@@ -4,9 +4,9 @@ import config from '../config/env.config'
 /**
  * 500 response & log when errors are raised.
  */
-const errorHandler: ErrorRequestHandler = (err, _req, res) => {
-    console.error(err);
-    return res.status(500).json({
+const errorHandler: ErrorRequestHandler = (err, req, res) => {
+   
+    return res.status(500).send({
         message: config.nodeEnv === 'production' ?
             'unknown error' :
             `${err}`

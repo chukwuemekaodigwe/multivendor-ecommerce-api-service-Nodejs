@@ -12,14 +12,19 @@ const userSchema = new Schema({
     email: String,
     password: String,
     permissionLevel: Number,
-    dateCreated: Date,
-    dateUpdated: Date,
+    businessName: String,
     dateDeleted: Date,
-})
+}, {timestamps: true})
 
 userSchema.virtual('id').get(function () {
     return this._id.toHexString()
 })
+
+userSchema.virtual('vendorKey').get(function () {
+    const str = this._id.toHexString()
+   return  str.split('').reverse().join('')
+})
+
 
 userSchema.set('toJSON', {
     virtuals: true

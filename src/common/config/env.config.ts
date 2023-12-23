@@ -24,7 +24,12 @@ const config = {
         "NORMAL_USER": 1,
         "PAID_USER": 4,
         "ADMIN": 2048
-    }
+    },
+    SMTP_HOST: process.env['MAIL_HOST'],
+    SMTP_PORT: process.env['MAIL_PORT'],
+    SMTP_USERNAME: process.env['MAIL_USERNAME'],
+    SMTP_PASSWORD: process.env['MAIL_PASSWORD'],
+
 }
 
 export default config

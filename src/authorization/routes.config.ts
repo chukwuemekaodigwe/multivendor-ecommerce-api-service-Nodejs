@@ -2,11 +2,12 @@ import VerifyUserMiddleware from './middlewares/verify.user.middleware'
 import AuthorizationController from './controllers/authorization.controller'
 import AuthValidationMiddleware from '../common/middlewares/auth.validation.middleware'
 
+
 const routesConfig = function (app) {
 
     app.post('/auth', [
         VerifyUserMiddleware.hasAuthValidFields,
-        VerifyUserMiddleware.isPasswordAndUserMatch,
+         VerifyUserMiddleware.isPasswordAndUserMatch,
         AuthorizationController.login
     ]);
 
@@ -17,8 +18,13 @@ const routesConfig = function (app) {
         AuthorizationController.refresh_token
     ]);
 
+    app.post('/reset_password',[
+        AuthorizationController.reset_password
+    ])
+
+    
     app.get('/', async (req, res) => {
-        res.send('Page found')
+        res.send({result: 'Page Found'})
     })
 };
 
