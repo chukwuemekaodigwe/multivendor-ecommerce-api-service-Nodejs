@@ -9,14 +9,13 @@ const OrderSchema = new Schema({
     invoiceId: String,
     grossTotal: Schema.Types.Decimal128,
     trackingId: String,
-    dateCreated: Date,
-    dateUpdated: Date,
     dateDeleted: Date,
-})
+}, {timestamps: true})
 
 OrderSchema.virtual('id').get(function () {
     return this._id.toHexString()
 })
+
 
 OrderSchema.set('toJSON', {
     virtuals: true

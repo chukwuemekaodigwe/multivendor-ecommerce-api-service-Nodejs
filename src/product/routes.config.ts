@@ -17,7 +17,7 @@ const routes = (app) => {
     ])
 
     app.get('/products', [
-        ValidationMiddleware.isRequestValid,
+        ValidationMiddleware.validJWTNeeded,
         ProductController.getList
     ])
 

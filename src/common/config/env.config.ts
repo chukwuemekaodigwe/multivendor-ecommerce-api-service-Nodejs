@@ -1,15 +1,17 @@
 import packageJson from '../../../package.json';
+import 'dotenv/config'
+
 
 /**
  * Pattern for config is:
  * key: process.env['KEY'] ?? default
  */
-const config = {
+const env = {
     version: packageJson.version,
     name: packageJson.name,
     description: packageJson.description,
     nodeEnv: process.env['NODE_ENV'] ?? 'development',
-    port: process.env['PORT'] ?? 3000,
+    port: process.env['PORT'] ?? 5000,
     clientCorsOrigins: {
         'test': process.env['DEV_ORIGIN'] ?? '*',
         'development': process.env['DEV_ORIGIN'] ?? '*',
@@ -32,4 +34,4 @@ const config = {
 
 }
 
-export default config
+export default env

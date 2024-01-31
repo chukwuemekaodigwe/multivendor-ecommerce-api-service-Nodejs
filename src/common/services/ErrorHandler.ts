@@ -6,7 +6,8 @@ import config from '../config/env.config'
  */
 const errorHandler: ErrorRequestHandler = (err, req, res) => {
    
-    return res.status(500).send({
+    return res.status(500)
+    .send({
         message: config.nodeEnv === 'production' ?
             'unknown error' :
             `${err}`

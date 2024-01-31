@@ -4,7 +4,7 @@ if(req.body){
     if (!req.body.name) {
         errors.push('Please provide the product name')
     }
-console.log(req.body)
+
     if (!req.body.picture) {
         errors.push('Product Image required')
     }

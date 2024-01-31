@@ -53,7 +53,7 @@ const isRequestValid = (req, res, next) => {
     let requester = req.headers['vendorid'];
     if (!requester) return res.status(403).send({ error: 'Authorization failed, vendor unknown' });
     requester = requester.split('').reverse().join('')
-    
+    // console.log(requester)
     CheckVendorId(requester).then((result: any) => {
          
         req.jwt = result

@@ -1,81 +1,39 @@
-import Product from '../../common/schemas/product'
+import BaseModel from '../../common/models/BaseModel';
 
-export const insertProduct = async (data) => {
-    const product = new Product(data)
-    return product.save()
+export default class OutBoundModel extends BaseModel {
+    constructor() {
+        super('product')
+    }
+
+    public ByVendorId(perpage, page, vendorId){
+        return this.paginate(
+            {'vendorId': vendorId},
+            perpage,
+            page
+        )
+    }
+
+    public ByCustomerId(perpage, page, customerId){
+        return this.paginate(
+            {'customerId': customerId},
+            perpage,
+            page
+        )
+    }
+
+    public ByOrderId(perpage, page, orderId){
+        return this.paginate(
+            {'orderId': orderId},
+            perpage,
+            page
+        )
+    }
+
+    public ByProductId(perpage, page, productId){
+        return this.paginate(
+            {'productId': productId },
+            perpage,
+            page
+        )
+    }
 }
-
-const findById = async (id) => {
-    return Product.findById(id)
-        .then((result) => {
-            if (!result) return
-            result = result.toJSON();
-            delete result._id
-            return result
-        })
-}
-
-const paginate = async (perPage, page, vendor) => {
-    return new Promise((resolve, reject) => {
-        Product.find({ vendorId: vendor })
-            .limit(perPage)
-            .skip(perPage * page)
-            .exec()
-            .then((res) => {
-                
-                resolve(res)
-            })
-            .catch(err => {
-                reject(err)
-            })
-    })
-}
-
-
-const list = async (perPage, page, vendor) => {
-    return new Promise((resolve, reject) => {
-        Product.find({ vendorId: vendor })
-            //.limit(perPage)
-           // .skip(perPage * page)
-            .exec()
-            .then((res) => {
-                
-                resolve(res)
-            })
-            .catch(err => {
-                console.log(err)
-                reject(err)
-            })
-    })
-}
-
-const updateProduct = async (id, data) => {
-    return Product.findOneAndUpdate({
-        _id: id,
-
-    }, data)
-}
-
-
-const deleteProduct = (id) => {
- return new Promise((resolve, reject) => {
-    Product.deleteOne({_id: id}, (err, response)=>{
-        if(err){
-            reject(err)
-        }else{
-            resolve(err)
-        }
-    })
- })   
-}
-
-
-export default {
-    insertProduct,
-    findById,
-    updateProduct,
-    deleteProduct,
-    list
-}
-
-

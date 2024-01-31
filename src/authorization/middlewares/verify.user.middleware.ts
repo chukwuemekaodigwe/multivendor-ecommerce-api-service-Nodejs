@@ -27,7 +27,7 @@ const hasAuthValidFields = (req, res, next) => {
 const isPasswordAndUserMatch = (req, res, next) => {
     UserModel.findByEmail(req.body.email)
         .then((user) => {
-         //   console.log(user)
+           // console.log(user)
             if (!user) {
                 res.status(404).send({error: 'User not found'});
             } else {

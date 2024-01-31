@@ -6,13 +6,11 @@ const billingSchema = new Schema({
     vendorId:  {type: Schema.Types.ObjectId, ref: 'User'},
     amountPaid: String,
     paymentMethod: String,
-    paymentDetail: String,
+    paymentDetail: Array,
     customerId:  {type: Schema.Types.ObjectId, ref: 'Customer'},
     orderId:  {type: Schema.Types.ObjectId, ref: 'Order'},
-    dateCreated: Date,
-    dateUpdated: Date,
     dateDeleted: Date
-})
+}, {timestamps: true})
 
 billingSchema.virtual('id').get(function () {
     return this._id.toHexString()

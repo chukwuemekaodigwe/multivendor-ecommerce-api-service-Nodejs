@@ -8,10 +8,9 @@ const statusSchema = new Schema({
     customerId:  {type: Schema.Types.ObjectId, ref: 'Customer'},
     orderId:  {type: Schema.Types.ObjectId, ref: 'Order'},
     location: String,
-    dateCreated: Date,
-    dateUpdated: Date,
     dateDeleted: Date
-})
+}, {timestamps: true})
+
 
 statusSchema.virtual('id').get(function () {
     return this._id.toHexString()

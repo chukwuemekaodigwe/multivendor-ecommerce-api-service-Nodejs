@@ -36,7 +36,7 @@ class SendMail {
 
    async liveAccount(){
             let transport = await nodemailer.createTransport({
-            host: '169.255.57.93', //config.SMTP_HOST,
+            host: config.SMTP_HOST,
             port: Number(config.SMTP_PORT),
             secure: true,
             auth: {
@@ -52,10 +52,12 @@ class SendMail {
 
     async send(data){
         await this.liveAccount().then(transport=>{
+           // console.log({transport: transport})
             transport.sendMail(data, (err, info)=>{
+
                return new Promise((resolve, reject)=>{
                 if(!err){
-                    console.log({'mail sent result': info})
+                  //  console.log({'mail sent result': info})
                     resolve(info)
                     
                 }else{
@@ -83,8 +85,8 @@ export async function sendPasswordReset(user, newPassword) {
         from: `"${config.name}" <info@peco-online.com.ng>`,
         to: `${user.email}, macdominicsavio@gmail.com`,
         subject: 'Password Reset Request',
-        html: mailTemplate(user.firstName, newPassword).html,
-        text: mailTemplate(user.firstName, newPassword).text
+        html: mailTemplate(newPassword, user.firstName).html,
+        text: mailTemplate(newPassword, user.firstName).text
     }
     
     return new SendMail(data)

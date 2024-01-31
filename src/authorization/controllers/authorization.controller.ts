@@ -4,6 +4,7 @@ import config from '../../common/config/env.config'
 import jwt from 'jsonwebtoken'
 import User from '../../users/models/users.model'
 import { sendPasswordReset } from '../../common/services/email.service'
+import usersModel from '../../users/models/users.model'
 
 
 const jwtSecret = config.jwt_secret
@@ -44,9 +45,10 @@ const reset_password = (req, res) => {
             let passkey = crypto.randomBytes(5).toString('hex')
           
            await sendPasswordReset(result, passkey).then((r) => {
-                saveNewPassword(result, passkey)
-               // console.log(r)
-                res.status(200).send({message: 'Proceed to your email to continue', data: r})
+             let  newPassword = saveNewPassword(result, passkey)
+              let a = usersModel.updatePassword(result._id, newPassword)
+               // console.log(a)
+                res.status(200).send({message: 'Proceed to your email to continue'})
             })
                 .catch((err) => {
                     console.log(err)
@@ -60,10 +62,11 @@ function saveNewPassword(userData, password) {
     let salt = crypto.randomBytes(16).toString('base64');
     let hash = crypto.createHmac('sha512', salt).update(password).digest("base64");
     let data = userData
-    data.password = salt + "$" + hash;
-
-    User.patchUser(data._id, data)
-    return
+    password = salt + "$" + hash;
+    return password;
+//console.log({'userData': userData, 'newPassword': data.password})
+  //return await User.updateProfile(data, data._id)
+     
 }
 
 export default {

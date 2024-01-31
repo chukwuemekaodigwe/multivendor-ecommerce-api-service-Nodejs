@@ -1,9 +1,7 @@
 import UserModel from '../models/users.model'
 import * as crypto from 'node:crypto'
 import config from '../../common/config/env.config'
-import {userType} from '../../common/interfaces/typings'
-import {Request, Response, NextFunction } from 'express'
-import { send } from 'node:process'
+import BaseModel from '../../common/models/BaseModel'
 
 const insert = (req, res, next) => {
     let salt = crypto.randomBytes(16).toString('base64');
@@ -12,9 +10,9 @@ const insert = (req, res, next) => {
     req.body.permissionLevel = config.permissionLevels.PAID_USER  //this route serves for new vendors
     UserModel.createUser(req.body)
         .then((result) => {
-            res.status(201).send({id: result._id});
+            res.status(201).send({ id: result._id });
         })
-        .catch((err)=>{
+        .catch((err) => {
             res.status(500).send('An error occured')
             next(err)
         })
@@ -28,10 +26,10 @@ const insertAdmin = (req, res, next) => {
     req.body.permissionLevel = config.permissionLevels.ADMIN  //this route serves for Syatem Admins
     UserModel.createUser(req.body)
         .then((result) => {
-            res.status(201).send({id: result._id});
+            res.status(201).send({ id: result._id });
         })
-        .catch((err)=>{
-            res.status(500).send({error: err})
+        .catch((err) => {
+            res.status(500).send({ error: err })
             //next(err)
         })
 };
@@ -39,18 +37,19 @@ const insertAdmin = (req, res, next) => {
 
 const updateProfile = (req, res) => {
     const data = req.body
-  data.defaultCurrency = data.currency
-   let user = req.jwt.userId
+    data.defaultCurrency = data.currency
+    let user = req.jwt.userId
     UserModel.updateProfile(data, user)
-    .then(result => {
-        res.status(200).send({result: result})
-    })
-    .catch(err => {
-        res.status(500).send({error: err})
-    })
+        .then(result => {
+            res.status(200).send({ result: result })
+        })
+        .catch(err => {
+            res.status(500).send({ error: err })
+        })
 }
 
 const list = (req, res) => {
+    
     let limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 25;
     let page = 0;
     if (req.query) {
@@ -65,6 +64,17 @@ const list = (req, res) => {
         })
 };
 
+/**
+ * @api {get} /user/:id Request User information
+ * @apiName GetUser
+ * @apiGroup User
+ *
+ * @apiParam {Number} id User's unique ID.
+ *
+ * @apiSuccess {String} firstname Firstname of the User.
+ * @apiSuccess {String} lastname  Lastname of the User.
+ */
+
 
 const getById = (req, res) => {
     UserModel.findById(req.params.userId)
@@ -76,7 +86,7 @@ const getById = (req, res) => {
 
 const patchById = (req, res) => {
     if (req.body.password) {
- 
+
         let salt = crypto.randomBytes(16).toString('base64');
         let hash = crypto.createHmac('sha512', salt).update(req.body.password).digest("base64");
         req.body.password = salt + "$" + hash;
@@ -91,7 +101,7 @@ const patchById = (req, res) => {
 
 const removeById = (req, res) => {
     UserModel.removeById(req.params.userId)
-        .then((result)=>{
+        .then((result) => {
             res.status(204).send({});
         });
 };

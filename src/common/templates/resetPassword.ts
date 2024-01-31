@@ -133,8 +133,8 @@ const resetPassword = function (otp, firstName) {
                       </table>
                       <p style="margin: 0 0 16px;">
                         Have additional questions or need direct assistance? <br /> Contact our team at 
-                        <a href="mailto:chiragmehta900@gmail.com" class="hover-underline"
-                          style="--text-opacity: 1; color: #7367f0; text-decoration: none;">chiragmehta900@gmail.com</a>.
+                        <a href="mailto:info@peco-online.com.ng" class="hover-underline"
+                          style="--text-opacity: 1; color: #7367f0; text-decoration: none;">info@peco-online.com.ng</a>.
                       </p>
                     </td>
                   </tr>

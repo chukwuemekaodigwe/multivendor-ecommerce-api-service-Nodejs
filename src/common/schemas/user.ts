@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { nextTick } from 'process'
 const Schema = mongoose.Schema
 const crypto = require('crypto')
 
@@ -29,6 +30,7 @@ userSchema.virtual('vendorKey').get(function () {
 userSchema.set('toJSON', {
     virtuals: true
 })
+
 
 const User = mongoose.model('User', userSchema)
 

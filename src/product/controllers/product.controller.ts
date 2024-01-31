@@ -4,7 +4,6 @@ import ProductModel from '../models/product.model'
 
 export default {
     insert : async (req, res, next) => {
-
         const body = req.body
         body.vendorId = req.jwt.userId
         await ProductModel.insertProduct(body).then(result => {

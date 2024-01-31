@@ -22,7 +22,7 @@ const routesConfig = function (app) {
     ]);
 
     app.get('/users', [
-        ValidationMiddleware.validJWTNeeded,
+      //  ValidationMiddleware.validJWTNeeded,
       //  PermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
         UsersController.list
     ]);

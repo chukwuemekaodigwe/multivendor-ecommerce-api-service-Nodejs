@@ -10,9 +10,9 @@ const customerSchema = new Schema({
     address: String,
     city: String,
     country: String,
-    
-    vendorId:  {type: Schema.Types.ObjectId, ref: 'User'},
-}, {timestamps: true})
+
+    vendorId: { type: Schema.Types.ObjectId, ref: 'User' },
+}, { timestamps: true })
 
 
 customerSchema.virtual('id').get(function () {

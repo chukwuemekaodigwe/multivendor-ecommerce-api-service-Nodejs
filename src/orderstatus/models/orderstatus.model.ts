@@ -1,8 +1,8 @@
 import BaseModel from '../../common/models/BaseModel';
 
-export default class OutBoundModel extends BaseModel {
+export default class OrderStatusModel extends BaseModel {
     constructor() {
-        super('outbound')
+        super('orderstatus')
     }
 
     public ByVendorId(perpage, page, vendorId){
@@ -29,11 +29,4 @@ export default class OutBoundModel extends BaseModel {
         )
     }
 
-    public ByProductId(perpage, page, productId){
-        return this.paginate(
-            {'productId': productId },
-            perpage,
-            page
-        )
-    }
 }
